@@ -10,7 +10,9 @@
     "lint:fix": "pnpm run lint:code:fix && pnpm run lint:markdown:fix && pnpm run lint:spelling",
     "lint:markdown": "markdownlint-cli2 \"**/*.md\" \"#**/node_modules\"",
     "lint:markdown:fix": "markdownlint-cli2-fix \"**/*.md\" \"#**/node_modules\"",
-    "lint:spelling": "cspell \"**\" --gitignore",
+
+    // this doesn't work because npm linking.  `git ls-files | xargs pnpm vale` is what the author recommends (https://github.com/errata-ai/vale/issues/243) which is :sad-face: because it requires shelling out to both `git` and `xargs`.
+    "lint:spelling": "pnpm vale .", // adding `--glob='!node_modules' didn't seem to work either
     "lint:code": "eslint . && prettier . --check",
     "lint:code:fix": "eslint . --fix && prettier . --write",
     "all": "pnpm run build && pnpm run generate && pnpm run lint:fix && pnpm run test"
@@ -18,6 +20,7 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@jest/globals": "29.3.1",
+    "@ocular-d/vale-bin": "^1.10.36",
     "@typescript-eslint/eslint-plugin": "5.46.1",
     "@typescript-eslint/parser": "5.46.1",
     "@typescript-eslint/utils": "5.46.1",
